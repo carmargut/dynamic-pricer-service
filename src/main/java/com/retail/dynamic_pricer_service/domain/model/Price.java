@@ -5,16 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Price {
-    private final UUID priceId;
-    private final UUID productId;
-    private final LocalDateTime startDate;
-    private final LocalDateTime endDate;
-    private final int priority;
-    private final BigDecimal price;
-    private final String currency;
-    private final UUID brandId;
-
+public record Price(UUID priceId, UUID brandId, UUID productId, LocalDateTime startDate, LocalDateTime endDate,
+                    int priority, BigDecimal price, String currency) {
     public Price(UUID priceId,
                  UUID brandId,
                  UUID productId,
@@ -36,37 +28,5 @@ public class Price {
         if (endDate.isBefore(startDate)) {
             throw new IllegalArgumentException("End date cannot be before start date");
         }
-    }
-
-    public UUID getBrandId() {
-        return brandId;
-    }
-
-    public UUID getProductId() {
-        return productId;
-    }
-
-    public UUID getPriceId() {
-        return priceId;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public String getCurrency() {
-        return currency;
     }
 }

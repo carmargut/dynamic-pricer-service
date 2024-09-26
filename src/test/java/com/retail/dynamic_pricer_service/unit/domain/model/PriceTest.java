@@ -37,13 +37,13 @@ class PriceTest {
     @Test
     void shouldCreateValidPrice() {
         Price priceObj = new Price(UUID.randomUUID(), brandId, productId, startDate, endDate, 1, price, currency);
-        assertEquals(productId, priceObj.getProductId());
-        assertEquals(brandId, priceObj.getBrandId());
-        assertEquals(startDate, priceObj.getStartDate());
-        assertEquals(endDate, priceObj.getEndDate());
-        assertEquals(price, priceObj.getPrice());
-        assertEquals(currency, priceObj.getCurrency());
-        assertEquals(1, priceObj.getPriority());
+        assertEquals(productId, priceObj.productId());
+        assertEquals(brandId, priceObj.brandId());
+        assertEquals(startDate, priceObj.startDate());
+        assertEquals(endDate, priceObj.endDate());
+        assertEquals(price, priceObj.price());
+        assertEquals(currency, priceObj.currency());
+        assertEquals(1, priceObj.priority());
     }
 
     @Test

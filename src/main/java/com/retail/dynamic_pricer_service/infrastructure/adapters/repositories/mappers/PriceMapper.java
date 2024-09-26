@@ -19,14 +19,14 @@ public class PriceMapper {
 
     public static PricePersistence toPersistence(Price price) {
         PricePersistence pricePersistence = new PricePersistence();
-        pricePersistence.setPriceId(price.getPriceId());
-        pricePersistence.setBrandId(price.getBrandId());
-        pricePersistence.setProductId(price.getProductId());
-        pricePersistence.setStartDate(price.getStartDate());
-        pricePersistence.setEndDate(price.getEndDate());
-        pricePersistence.setPriority(price.getPriority());
-        pricePersistence.setPrice(price.getPrice());
-        pricePersistence.setCurrency(price.getCurrency());
+        pricePersistence.setPriceId(price.priceId());
+        pricePersistence.setBrandId(price.brandId());
+        pricePersistence.setProductId(price.productId());
+        pricePersistence.setStartDate(price.startDate());
+        pricePersistence.setEndDate(price.endDate());
+        pricePersistence.setPriority(price.priority());
+        pricePersistence.setPrice(price.price());
+        pricePersistence.setCurrency(price.currency());
         return pricePersistence;
     }
 }

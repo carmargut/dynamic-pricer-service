@@ -45,9 +45,9 @@ class PriceJpaRepositoryAdapterIntegrationTest {
 
         assertFalse(prices.isEmpty());
         Price retrievedPrice = prices.get(0);
-        assertEquals(productId, retrievedPrice.getProductId());
-        assertEquals(brandId, retrievedPrice.getBrandId());
-        assertEquals(new BigDecimal("100.00"), retrievedPrice.getPrice());
+        assertEquals(productId, retrievedPrice.productId());
+        assertEquals(brandId, retrievedPrice.brandId());
+        assertEquals(new BigDecimal("100.00"), retrievedPrice.price());
     }
 
     @Test
