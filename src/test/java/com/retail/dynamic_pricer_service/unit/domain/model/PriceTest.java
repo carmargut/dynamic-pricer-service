@@ -1,5 +1,6 @@
-package com.retail.dynamic_pricer_service.domain.model;
+package com.retail.dynamic_pricer_service.unit.domain.model;
 
+import com.retail.dynamic_pricer_service.domain.model.Price;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
