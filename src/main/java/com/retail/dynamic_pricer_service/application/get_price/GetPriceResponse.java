@@ -10,6 +10,7 @@ public record GetPriceResponse(
         UUID productId,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        BigDecimal price
+        BigDecimal price,
+        String currency
 ) {
 }

@@ -28,7 +28,8 @@ public class GetPriceUseCase implements UseCase<GetPriceRequest, GetPriceRespons
                 price.productId(),
                 price.startDate(),
                 price.endDate(),
-                price.price()
+                price.price(),
+                price.currency()
         );
     }
 }
