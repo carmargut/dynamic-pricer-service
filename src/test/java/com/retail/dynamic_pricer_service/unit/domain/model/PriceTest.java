@@ -1,5 +1,6 @@
 package com.retail.dynamic_pricer_service.unit.domain.model;
 
+import com.retail.dynamic_pricer_service.domain.exceptions.ValidationException;
 import com.retail.dynamic_pricer_service.domain.model.Price;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ class PriceTest {
 
     @Test
     void shouldThrowExceptionWhenStartDateIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), brandId, productId, null, endDate, 1, price, currency)
         );
         assertEquals("Start date cannot be null", exception.getMessage());
@@ -56,7 +57,7 @@ class PriceTest {
 
     @Test
     void shouldThrowExceptionWhenEndDateIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), brandId, productId, startDate, null, 1, price, currency)
         );
         assertEquals("End date cannot be null", exception.getMessage());
@@ -64,7 +65,7 @@ class PriceTest {
 
     @Test
     void shouldThrowExceptionWhenProductIdIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), brandId, null, startDate, endDate, 1, price, currency)
         );
         assertEquals("Product ID cannot be null", exception.getMessage());
@@ -72,7 +73,7 @@ class PriceTest {
 
     @Test
     void shouldThrowExceptionWhenBrandIdIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), null, productId, startDate, endDate, 1, price, currency)
         );
         assertEquals("Brand ID cannot be null", exception.getMessage());
@@ -80,7 +81,7 @@ class PriceTest {
 
     @Test
     void shouldThrowExceptionWhenPriceIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), brandId, productId, startDate, endDate, 1, null, currency)
         );
         assertEquals("Price cannot be null", exception.getMessage());
@@ -88,7 +89,7 @@ class PriceTest {
 
     @Test
     void shouldThrowExceptionWhenCurrencyIsNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), brandId, productId, startDate, endDate, 1, price, null)
         );
         assertEquals("Currency cannot be null", exception.getMessage());
@@ -97,7 +98,7 @@ class PriceTest {
     @Test
     void shouldThrowExceptionWhenEndDateIsBeforeStartDate() {
         LocalDateTime invalidEndDate = LocalDateTime.of(2023, 8, 1, 10, 0, 0);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+        ValidationException exception = assertThrows(ValidationException.class, () ->
                 new Price(UUID.randomUUID(), brandId, productId, startDate, invalidEndDate, 1, price, currency)
         );
         assertEquals("End date cannot be before start date", exception.getMessage());

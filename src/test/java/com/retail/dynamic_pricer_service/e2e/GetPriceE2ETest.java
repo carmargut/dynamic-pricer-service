@@ -110,7 +110,7 @@ public class GetPriceE2ETest {
                         .param("brandId", invalidBrandId.toString())
                         .param("applicationDate", applicationDate))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Price not found"));
+                .andExpect(jsonPath("$.message").value("No applicable price found for the given parameters"));
     }
 
     @Test
@@ -122,8 +122,7 @@ public class GetPriceE2ETest {
                         .param("productId", invalidProductId)
                         .param("brandId", brandId.toString())
                         .param("applicationDate", validDate))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Invalid UUID format"));
+                .andExpect(status().isBadRequest());
     }
 
     @Test

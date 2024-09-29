@@ -1,26 +1,28 @@
 package com.retail.dynamic_pricer_service.infrastructure.apis.rest;
 
+import com.retail.dynamic_pricer_service.domain.exceptions.DomainException;
+import com.retail.dynamic_pricer_service.domain.exceptions.EntityNotFoundException;
+import com.retail.dynamic_pricer_service.domain.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
 
-    @ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public RestErrorResponse handleNoSuchElementException(NoSuchElementException ex) {
-        return new RestErrorResponse("Price not found");
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<RestErrorResponse> handleValidationException(ValidationException ex) {
+        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), ex.getErrorCode()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public RestErrorResponse handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        return new RestErrorResponse("Invalid UUID format");
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<RestErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), ex.getErrorCode()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<RestErrorResponse> handleDomainException(DomainException ex) {
+        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), ex.getErrorCode()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-

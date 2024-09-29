@@ -1,5 +1,6 @@
 package com.retail.dynamic_pricer_service.unit.domain.services;
 
+import com.retail.dynamic_pricer_service.domain.exceptions.EntityNotFoundException;
 import com.retail.dynamic_pricer_service.domain.model.Price;
 import com.retail.dynamic_pricer_service.domain.ports.PriceRepository;
 import com.retail.dynamic_pricer_service.domain.services.PriceDomainService;
@@ -10,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,8 +65,8 @@ class PriceDomainServiceTest {
         LocalDateTime applicationDate = LocalDateTime.of(2024, 9, 1, 10, 0, 0);
         when(priceRepository.findByProductAndBrand(productId, brandId)).thenReturn(new ArrayList<>());
 
-        NoSuchElementException exception = assertThrows(
-                NoSuchElementException.class,
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
                 () -> priceDomainService.findHighestPriorityPrice(productId, brandId, applicationDate)
         );
 

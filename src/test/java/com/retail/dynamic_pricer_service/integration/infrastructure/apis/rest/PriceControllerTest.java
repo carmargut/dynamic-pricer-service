@@ -3,6 +3,9 @@ package com.retail.dynamic_pricer_service.integration.infrastructure.apis.rest;
 import com.retail.dynamic_pricer_service.application.get_price.GetPriceRequest;
 import com.retail.dynamic_pricer_service.application.get_price.GetPriceResponse;
 import com.retail.dynamic_pricer_service.application.get_price.GetPriceUseCase;
+import com.retail.dynamic_pricer_service.domain.exceptions.DomainException;
+import com.retail.dynamic_pricer_service.domain.exceptions.EntityNotFoundException;
+import com.retail.dynamic_pricer_service.domain.exceptions.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -81,7 +83,7 @@ class PriceControllerTest {
         UUID productId = UUID.randomUUID();
         UUID brandId = UUID.randomUUID();
         String applicationDate = "2020-06-14T10:00:00";
-        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class))).thenThrow(new NoSuchElementException("Price not found"));
+        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class))).thenThrow(new EntityNotFoundException("No applicable price found for the given parameters"));
 
         mockMvc.perform(get("/api/prices")
                         .param("productId", productId.toString())
@@ -89,7 +91,44 @@ class PriceControllerTest {
                         .param("applicationDate", applicationDate)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Price not found"));
+                .andExpect(jsonPath("$.message").value("No applicable price found for the given parameters"));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenValidationExceptionIsThrown() throws Exception {
+        UUID productId = UUID.randomUUID();
+        UUID brandId = UUID.randomUUID();
+        String applicationDate = "2020-06-14T10:00:00";
+
+        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class)))
+                .thenThrow(new ValidationException("Validation error"));
+
+        mockMvc.perform(get("/api/prices")
+                        .param("productId", productId.toString())
+                        .param("brandId", brandId.toString())
+                        .param("applicationDate", applicationDate)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Validation error"));
+    }
+
+    @Test
+    void shouldReturnInternalServerErrorWhenDomainExceptionIsThrown() throws Exception {
+        UUID productId = UUID.randomUUID();
+        UUID brandId = UUID.randomUUID();
+        String applicationDate = "2020-06-14T10:00:00";
+
+        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class)))
+                .thenThrow(new DomainException("Unexpected error", "500"));
+
+        mockMvc.perform(get("/api/prices")
+                        .param("productId", productId.toString())
+                        .param("brandId", brandId.toString())
+                        .param("applicationDate", applicationDate)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value("Unexpected error"))
+                .andExpect(jsonPath("$.status").value("500"));
     }
 
     @Test

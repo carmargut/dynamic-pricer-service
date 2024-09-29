@@ -31,7 +31,7 @@ public class PriceController {
         try {
             dateTime = LocalDateTime.parse(applicationDate, formatter);
         } catch (DateTimeParseException e) {
-            return ResponseEntity.badRequest().body(new RestErrorResponse("Invalid date format"));
+            return ResponseEntity.badRequest().body(new RestErrorResponse("Invalid date format", "400"));
         }
         GetPriceRequest getPriceRequest = new GetPriceRequest(dateTime, brandId, productId);
         GetPriceResponse response = getPriceUseCase.execute(getPriceRequest);

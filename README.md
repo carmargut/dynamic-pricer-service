@@ -1,5 +1,7 @@
 # Dynamic Pricer Service
 
+## Personal Notes
+
 ### Modifications
 
 - I found it appropriate to rename some fields:
@@ -11,6 +13,13 @@
         - **Global Uniqueness**: UUIDs ensure unique IDs across systems, useful for distributed environments.
         - **Security**: Harder to guess than sequential IDs.
         - **Scalability**: Decouples ID generation from the database, making the system more flexible and secure.
+
+### Custom exceptions and REST error codes integration
+
+I implemented a custom exception system and integrated it with the REST error code format.
+Although this introduces some coupling between the domain layer and the REST protocol, I found it to be a suitable
+approach for this project. This solution enhances error visibility during manual testing, providing clear feedback
+on the types of errors found.
 
 ### Technologies used
 
