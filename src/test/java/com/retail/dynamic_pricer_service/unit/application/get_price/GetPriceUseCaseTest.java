@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -33,12 +34,16 @@ class GetPriceUseCaseTest {
         UUID productId = UUID.randomUUID();
         UUID brandId = UUID.randomUUID();
         UUID priceId = UUID.randomUUID();
-        LocalDateTime startDate = LocalDateTime.of(2024, 9, 1, 10, 0, 0);
-        LocalDateTime endDate = LocalDateTime.of(2024, 12, 1, 10, 0, 0);
+        String startDateString = "2024-09-01T10:00:00";
+        String endDateString = "2024-12-01T10:00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(startDateString, formatter);
+        LocalDateTime endDate = LocalDateTime.parse(endDateString, formatter);
+
         BigDecimal priceValue = new BigDecimal("35.50");
         Price mockPrice = new Price(priceId, brandId, productId, startDate, endDate, 1, priceValue, "EUR");
         when(priceDomainService.findHighestPriorityPrice(productId, brandId, startDate)).thenReturn(mockPrice);
-        GetPriceRequest request = new GetPriceRequest(startDate, brandId, productId);
+        GetPriceRequest request = new GetPriceRequest(productId, brandId, startDateString);
 
         GetPriceResponse response = getPriceUseCase.execute(request);
 
@@ -55,9 +60,11 @@ class GetPriceUseCaseTest {
     void shouldThrowExceptionWhenPriceNotFound() {
         UUID productId = UUID.randomUUID();
         UUID brandId = UUID.randomUUID();
-        LocalDateTime startDate = LocalDateTime.of(2024, 9, 1, 10, 0, 0);
+        String startDateString = "2024-09-01T10:00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(startDateString, formatter);
         when(priceDomainService.findHighestPriorityPrice(productId, brandId, startDate)).thenThrow(new NoSuchElementException("Price not found"));
-        GetPriceRequest request = new GetPriceRequest(startDate, brandId, productId);
+        GetPriceRequest request = new GetPriceRequest(productId, brandId, startDateString);
 
         NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> getPriceUseCase.execute(request));
         assertEquals("Price not found", exception.getMessage());

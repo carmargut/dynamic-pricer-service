@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.UUID;
 
 @RestController
@@ -26,14 +23,7 @@ public class PriceController {
 
     @GetMapping
     public ResponseEntity<?> getPrice(@RequestParam UUID productId, @RequestParam UUID brandId, @RequestParam String applicationDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        LocalDateTime dateTime;
-        try {
-            dateTime = LocalDateTime.parse(applicationDate, formatter);
-        } catch (DateTimeParseException e) {
-            return ResponseEntity.badRequest().body(new RestErrorResponse("Invalid date format", "400"));
-        }
-        GetPriceRequest getPriceRequest = new GetPriceRequest(dateTime, brandId, productId);
+        GetPriceRequest getPriceRequest = new GetPriceRequest(productId, brandId, applicationDate);
         GetPriceResponse response = getPriceUseCase.execute(getPriceRequest);
         return ResponseEntity.ok(response);
     }

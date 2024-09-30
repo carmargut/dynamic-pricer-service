@@ -53,6 +53,11 @@ public class GetPriceE2ETest {
                         .param("applicationDate", applicationDate)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.priceId").value("1e53c1f0-d3f4-11ec-9d64-000000000002"))
+                .andExpect(jsonPath("$.brandId").value(brandId.toString()))
+                .andExpect(jsonPath("$.productId").value(productId.toString()))
+                .andExpect(jsonPath("$.startDate").value("2020-06-14T15:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-06-14T18:30:00"))
                 .andExpect(jsonPath("$.price").value(25.45))
                 .andExpect(jsonPath("$.currency").value("EUR"));
     }
@@ -67,6 +72,11 @@ public class GetPriceE2ETest {
                         .param("applicationDate", applicationDate)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.priceId").value("1e53c1f0-d3f4-11ec-9d64-000000000001"))
+                .andExpect(jsonPath("$.brandId").value(brandId.toString()))
+                .andExpect(jsonPath("$.productId").value(productId.toString()))
+                .andExpect(jsonPath("$.startDate").value("2020-06-14T00:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"))
                 .andExpect(jsonPath("$.price").value(35.50))
                 .andExpect(jsonPath("$.currency").value("EUR"));
     }
@@ -81,6 +91,11 @@ public class GetPriceE2ETest {
                         .param("applicationDate", applicationDate)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.priceId").value("1e53c1f0-d3f4-11ec-9d64-000000000003"))
+                .andExpect(jsonPath("$.brandId").value(brandId.toString()))
+                .andExpect(jsonPath("$.productId").value(productId.toString()))
+                .andExpect(jsonPath("$.startDate").value("2020-06-15T00:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-06-15T11:00:00"))
                 .andExpect(jsonPath("$.price").value(30.50))
                 .andExpect(jsonPath("$.currency").value("EUR"));
     }
@@ -95,6 +110,11 @@ public class GetPriceE2ETest {
                         .param("applicationDate", applicationDate)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.priceId").value("1e53c1f0-d3f4-11ec-9d64-000000000004"))
+                .andExpect(jsonPath("$.brandId").value(brandId.toString()))
+                .andExpect(jsonPath("$.productId").value(productId.toString()))
+                .andExpect(jsonPath("$.startDate").value("2020-06-15T16:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"))
                 .andExpect(jsonPath("$.price").value(38.95))
                 .andExpect(jsonPath("$.currency").value("EUR"));
     }

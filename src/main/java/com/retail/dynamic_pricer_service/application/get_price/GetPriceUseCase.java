@@ -18,9 +18,9 @@ public class GetPriceUseCase implements UseCase<GetPriceRequest, GetPriceRespons
     @Override
     public GetPriceResponse execute(GetPriceRequest request) {
         Price price = priceService.findHighestPriorityPrice(
-                request.productId(),
-                request.brandId(),
-                request.applicationDate()
+                request.getProductId(),
+                request.getBrandId(),
+                request.getApplicationDate()
         );
         return new GetPriceResponse(
                 price.priceId(),
