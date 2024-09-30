@@ -1,0 +1,248 @@
+{
+  "info": {
+    "_postman_id": "af63e596-993d-447b-b332-1989654ad4a9",
+    "name": "GFT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29540651"
+  },
+  "item": [
+    {
+      "name": "Request not found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=f23d225b-602d-410c-aa42-1660954aa204&brandId=70f1947a-6724-ae22-a46b-2274d6c7b32a&applicationDate=2020-06-14T10:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "f23d225b-602d-410c-aa42-1660954aa204"
+            },
+            {
+              "key": "brandId",
+              "value": "70f1947a-6724-ae22-a46b-2274d6c7b32a"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-14T10:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid date",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=f23d225b-602d-410c-aa42-1660954aa204&brandId=70f1947a-6724-ae22-a46b-2274d6c7b32a&applicationDate=2020-06-14T10:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "f23d225b-602d-410c-aa42-1660954aa204"
+            },
+            {
+              "key": "brandId",
+              "value": "70f1947a-6724-ae22-a46b-2274d6c7b32a"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-14T10:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test 1 -> 14th 10:00",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=1e53c1f0-d3f4-11ec-9d64-000000035455&brandId=1e53c1f0-d3f4-11ec-9d64-000000000001&applicationDate=2020-06-14T10:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000035455"
+            },
+            {
+              "key": "brandId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000000001"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-14T10:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test 2 -> 14th 16:00",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=1e53c1f0-d3f4-11ec-9d64-000000035455&brandId=1e53c1f0-d3f4-11ec-9d64-000000000001&applicationDate=2020-06-14T18:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000035455"
+            },
+            {
+              "key": "brandId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000000001"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-14T18:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test 3 -> 14th 21:00",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=1e53c1f0-d3f4-11ec-9d64-000000035455&brandId=1e53c1f0-d3f4-11ec-9d64-000000000001&applicationDate=2020-06-14T21:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000035455"
+            },
+            {
+              "key": "brandId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000000001"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-14T21:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test 4 -> 15th 10:00",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=1e53c1f0-d3f4-11ec-9d64-000000035455&brandId=1e53c1f0-d3f4-11ec-9d64-000000000001&applicationDate=2020-06-15T10:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000035455"
+            },
+            {
+              "key": "brandId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000000001"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-15T10:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test 5 -> 16th 21:00",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/prices?productId=1e53c1f0-d3f4-11ec-9d64-000000035455&brandId=1e53c1f0-d3f4-11ec-9d64-000000000001&applicationDate=2020-06-16T21:00:00",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "prices"
+          ],
+          "query": [
+            {
+              "key": "productId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000035455"
+            },
+            {
+              "key": "brandId",
+              "value": "1e53c1f0-d3f4-11ec-9d64-000000000001"
+            },
+            {
+              "key": "applicationDate",
+              "value": "2020-06-16T21:00:00"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
