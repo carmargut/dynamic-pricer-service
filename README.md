@@ -16,10 +16,9 @@
 
 ### Custom exceptions and REST error codes integration
 
-I implemented a custom exception system and integrated it with the REST error code format.
-Although this introduces some coupling between the domain layer and the REST protocol, I found it to be a suitable
-approach for this project. This solution enhances error visibility during manual testing, providing clear feedback
-on the types of errors found.
+I implemented a custom exception system tailored to the needs of the application, allowing for clear separation of
+concerns while providing detailed error handling. The custom exceptions are designed to be flexible, enabling the
+encapsulation of various business and validation rules at the domain level.
 
 ### Technologies used
 

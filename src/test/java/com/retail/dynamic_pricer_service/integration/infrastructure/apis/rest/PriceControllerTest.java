@@ -119,7 +119,7 @@ class PriceControllerTest {
         String applicationDate = "2020-06-14T10:00:00";
 
         Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class)))
-                .thenThrow(new DomainException("Unexpected error", "500"));
+                .thenThrow(new DomainException("Unexpected error"));
 
         mockMvc.perform(get("/api/prices")
                         .param("productId", productId.toString())
