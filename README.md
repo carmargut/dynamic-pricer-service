@@ -5,6 +5,7 @@
 - [Dynamic Pricer Service](#dynamic-pricer-service)
     - [Build](#build)
         - [Instructions](#instructions)
+        - [Instructions](#instructions)
             - [Build the project](#instructions)
             - [Run the application](#instructions)
             - [Access H2 database](#instructions)
@@ -20,6 +21,10 @@
             - [Mapping](#mapping)
 
 ## Build
+
+### Prerequisites
+
+- Java 23
 
 ### Instructions
 
@@ -119,3 +124,14 @@ ideal for testing and fast development purposes because of its lightweight natur
 I used mappers to convert between the database persistence models (PricePersistence) and the domain models
 (Price). This ensures a clean separation between the database layer and business logic.
 
+#### Indexes for optimization
+
+To optimize the performance of searches, I added two indexes in the PRICES table:
+
+- **BRAND_ID Index**: I created an index on the `BRAND_ID` column to speed up queries that filter by brand.
+- **PRODUCT_ID Index**: An index was also created for the `PRODUCT_ID` column, ensuring faster lookups when searching by
+  product.
+
+While indexing `start_date` and `end_date` could also optimize range queries, I chose to handle this logic in the domain
+service to keep business rules decoupled from data access, following clean architecture principles [as mentioned
+before](#domain-service).

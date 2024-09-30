@@ -7,7 +7,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "PRICES")
+@Table(
+        name = "PRICES",
+        indexes = {
+                @Index(name = "idx_brand_id", columnList = "BRAND_ID"),
+                @Index(name = "idx_product_id", columnList = "PRODUCT_ID")
+        }
+)
 public class PricePersistence {
 
     @Id
