@@ -3,22 +3,23 @@
 # Table of Contents
 
 - [Dynamic Pricer Service](#dynamic-pricer-service)
-    - [Build](#build)
-        - [Instructions](#instructions)
-        - [Instructions](#instructions)
-            - [Build the project](#instructions)
-            - [Run the application](#instructions)
-            - [Access H2 database](#instructions)
-            - [Testing the API](#testing-the-api)
-    - [Personal Notes](#personal-notes)
-        - [Modifications](#modifications)
-        - [Custom exceptions and REST error codes integration](#custom-exceptions-and-rest-error-codes-integration)
-        - [Technologies used](#technologies-used)
-            - [Domain Service](#domain-service)
-            - [JPA and Hibernate](#jpa-and-hibernate)
-            - [UUID-based Identifiers](#uuid-based-identifiers)
-            - [H2 Database](#h2-database)
-            - [Mapping](#mapping)
+- [Table of Contents](#table-of-contents)
+  - [Build](#build)
+    - [Prerequisites](#prerequisites)
+    - [Instructions](#instructions)
+    - [Testing the API](#testing-the-api)
+      - [Postman](#postman)
+    - [SwaggerUI](#swaggerui)
+  - [Personal Notes](#personal-notes)
+    - [Modifications](#modifications)
+    - [Custom exceptions and REST error codes integration](#custom-exceptions-and-rest-error-codes-integration)
+    - [Technologies used](#technologies-used)
+      - [Domain Service](#domain-service)
+      - [JPA and Hibernate](#jpa-and-hibernate)
+      - [UUID-based Identifiers](#uuid-based-identifiers)
+      - [H2 Database](#h2-database)
+      - [Mapping](#mapping)
+      - [Indexes for optimization](#indexes-for-optimization)
 
 ## Build
 
@@ -30,25 +31,31 @@
 
 - Build the project
 
-    ```bash
-     mvn clean install
-    ```
+  ```bash
+   mvn clean install
+  ```
+
 - Run the application
-    ```bash
-     mvn spring-boot:run
-    ```
+  ```bash
+   mvn spring-boot:run
+  ```
 - Access H2 database
 
   If you want to check the in-memory database (H2), you can access it via:
+
   ```
   http://localhost:8080/h2-console
   ```
-  Use the following credentials:
-    - **JDBC URL**: jdbc:h2:mem:db
-    - **Username**: sa
-    - **Password**: (leave blank)
 
-#### Testing the API
+  Use the following credentials:
+
+  - **JDBC URL**: jdbc:h2:mem:db
+  - **Username**: sa
+  - **Password**: (leave blank)
+
+### Testing the API
+
+#### Postman
 
 A Postman collection has been included in this repository, containing example requests based on the project
 requirements.
@@ -69,20 +76,32 @@ This collection covers scenarios such as:
   Use the imported collection to test the API with example requests, including scenarios for price lookup and error
   handling.
 
+### SwaggerUI
+
+The API is documented and can be tested interactively using SwaggerUI. SwaggerUI allows you to explore the available
+endpoints, see the expected inputs and outputs, and make live requests directly from your browser
+
+**Instructions**
+
+1. Start the application.
+2. Open your browser and go to: <http://localhost:8080/swagger-ui/index.html>
+3. Explore and test the available endpoints directly through the SwaggerUI interface.
+
 ## Personal Notes
 
 ### Modifications
 
 - I found it appropriate to rename some fields:
-    - `PRICE_LIST` -> `PRICE_ID`: Since it's the identifier of the entity and not a list.
-    - `CURR` -> `CURRENCY`: For better clarity.
+
+  - `PRICE_LIST` -> `PRICE_ID`: Since it's the identifier of the entity and not a list.
+  - `CURR` -> `CURRENCY`: For better clarity.
 
 - I made a key decision to replace the use of `int` identifiers with UUIDs for `productId`, `brandId`, and `priceId`
   fields.
-    - Why?
-        - **Global Uniqueness**: UUIDs ensure unique IDs across systems, useful for distributed environments.
-        - **Security**: Harder to guess than sequential IDs.
-        - **Scalability**: Decouples ID generation from the database, making the system more flexible and secure.
+  - Why?
+    - **Global Uniqueness**: UUIDs ensure unique IDs across systems, useful for distributed environments.
+    - **Security**: Harder to guess than sequential IDs.
+    - **Scalability**: Decouples ID generation from the database, making the system more flexible and secure.
 
 ### Custom exceptions and REST error codes integration
 
