@@ -4,36 +4,52 @@
 
 - [Dynamic Pricer Service](#dynamic-pricer-service)
 - [Table of Contents](#table-of-contents)
-  - [Build](#build)
-    - [Prerequisites](#prerequisites)
-    - [Instructions](#instructions)
-    - [Testing the API](#testing-the-api)
-      - [Postman](#postman)
-    - [SwaggerUI](#swaggerui)
-  - [Personal Notes](#personal-notes)
-    - [Modifications](#modifications)
-    - [Custom exceptions and REST error codes integration](#custom-exceptions-and-rest-error-codes-integration)
-    - [Technologies used](#technologies-used)
-      - [Domain Service](#domain-service)
-      - [JPA and Hibernate](#jpa-and-hibernate)
-      - [UUID-based Identifiers](#uuid-based-identifiers)
-      - [H2 Database](#h2-database)
-      - [Mapping](#mapping)
-      - [Indexes for optimization](#indexes-for-optimization)
+    - [Build](#build)
+        - [Prerequisites](#prerequisites)
+        - [Instructions](#instructions)
+            - [Local development](#local-development)
+            - [Docker development](#docker-development)
+        - [Testing the API](#testing-the-api)
+            - [Postman](#postman)
+            - [SwaggerUI](#swaggerui)
+    - [Personal Notes](#personal-notes)
+        - [Modifications](#modifications)
+        - [Custom exceptions and REST error codes integration](#custom-exceptions-and-rest-error-codes-integration)
+        - [Technologies used](#technologies-used)
+            - [Domain Service](#domain-service)
+            - [JPA and Hibernate](#jpa-and-hibernate)
+            - [UUID-based Identifiers](#uuid-based-identifiers)
+            - [H2 Database](#h2-database)
+            - [Mapping](#mapping)
+            - [Indexes for optimization](#indexes-for-optimization)
 
 ## Build
 
 ### Prerequisites
 
 - Java 23
+- Maven (for local development)
 
 ### Instructions
 
-- Build the project
+1. Build the project (common step)
 
-  ```bash
+   Before running the application, you need to build it. Run the following command:
+
+   ```bash
    mvn clean install
-  ```
+   ```
+2. Choose your preferred way of running the application: either locally or using Docker.
+
+3. To run only the tests without starting the application, execute the following command:
+
+    ```bash
+    mvn test
+    ```
+
+#### Local development
+
+If you want to run the application locally, follow these steps:
 
 - Run the application
   ```bash
@@ -49,9 +65,31 @@
 
   Use the following credentials:
 
-  - **JDBC URL**: jdbc:h2:mem:db
-  - **Username**: sa
-  - **Password**: (leave blank)
+    - **JDBC URL**: jdbc:h2:mem:db
+    - **Username**: sa
+    - **Password**: (leave blank)
+
+#### Docker development
+
+If you prefer to run the application inside a Docker container, follow these steps:
+
+1. Build the Docker image
+
+   To build the Docker image of the application, use the following command from the root directory of the project (where
+   your `Dockerfile` is located):
+
+   ```bash
+   docker build -t dynamic-pricer-service .
+   ```
+2. Run the application with Docker
+
+   Once the image is built, you can run the container using the following command:
+
+   ```bash
+   docker run -d -p 8080:8080 dynamic-pricer-service
+   ```
+
+   This will start the application and make it available at <http://localhost:8080>
 
 ### Testing the API
 
@@ -76,7 +114,7 @@ This collection covers scenarios such as:
   Use the imported collection to test the API with example requests, including scenarios for price lookup and error
   handling.
 
-### SwaggerUI
+#### SwaggerUI
 
 The API is documented and can be tested interactively using SwaggerUI. SwaggerUI allows you to explore the available
 endpoints, see the expected inputs and outputs, and make live requests directly from your browser
@@ -93,15 +131,15 @@ endpoints, see the expected inputs and outputs, and make live requests directly 
 
 - I found it appropriate to rename some fields:
 
-  - `PRICE_LIST` -> `PRICE_ID`: Since it's the identifier of the entity and not a list.
-  - `CURR` -> `CURRENCY`: For better clarity.
+    - `PRICE_LIST` -> `PRICE_ID`: Since it's the identifier of the entity and not a list.
+    - `CURR` -> `CURRENCY`: For better clarity.
 
 - I made a key decision to replace the use of `int` identifiers with UUIDs for `productId`, `brandId`, and `priceId`
   fields.
-  - Why?
-    - **Global Uniqueness**: UUIDs ensure unique IDs across systems, useful for distributed environments.
-    - **Security**: Harder to guess than sequential IDs.
-    - **Scalability**: Decouples ID generation from the database, making the system more flexible and secure.
+    - Why?
+        - **Global Uniqueness**: UUIDs ensure unique IDs across systems, useful for distributed environments.
+        - **Security**: Harder to guess than sequential IDs.
+        - **Scalability**: Decouples ID generation from the database, making the system more flexible and secure.
 
 ### Custom exceptions and REST error codes integration
 
@@ -136,7 +174,9 @@ for flexibility, security, and scalability.
 #### H2 Database
 
 As requested, I used H2 as an in-memory database to ensure fast initialization and teardown for testing. H2 is
-ideal for testing and fast development purposes because of its lightweight nature and ease of setup
+ideal for testing and fast development purposes because of its lightweight nature and ease of setup.
+On the other hand, personally, I'd have opted for PostgreSQL as the main database for production, given its numerous
+advantages such as robustness, scalability, and rich feature set. I'd have kept H2 strictly for testing purposes.
 
 #### Mapping
 
