@@ -1,4 +1,4 @@
-package com.retail.dynamic_pricer_service.application.get_price;
+package com.retail.dynamic_pricer_service.infrastructure.adapters.repositories.model;
 
 import com.retail.dynamic_pricer_service.domain.exceptions.ValidationException;
 
@@ -46,4 +46,5 @@ public class GetPriceRequest {
     public LocalDateTime getApplicationDate() {
         return applicationDate;
     }
+
 }

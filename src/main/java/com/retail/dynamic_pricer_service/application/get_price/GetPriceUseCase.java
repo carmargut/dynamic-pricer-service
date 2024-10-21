@@ -1,13 +1,12 @@
 package com.retail.dynamic_pricer_service.application.get_price;
 
-
-import com.retail.dynamic_pricer_service.application.shared.UseCase;
 import com.retail.dynamic_pricer_service.domain.model.Price;
+import com.retail.dynamic_pricer_service.domain.model.PriceRequest;
 import com.retail.dynamic_pricer_service.domain.services.PriceDomainService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetPriceUseCase implements UseCase<GetPriceRequest, GetPriceResponse> {
+public class GetPriceUseCase {
 
     private final PriceDomainService priceService;
 
@@ -15,21 +14,12 @@ public class GetPriceUseCase implements UseCase<GetPriceRequest, GetPriceRespons
         this.priceService = priceService;
     }
 
-    @Override
-    public GetPriceResponse execute(GetPriceRequest request) {
-        Price price = priceService.findHighestPriorityPrice(
+    public Price execute(PriceRequest request) {
+        return priceService.findHighestPriorityPrice(
                 request.getProductId(),
                 request.getBrandId(),
                 request.getApplicationDate()
         );
-        return new GetPriceResponse(
-                price.priceId(),
-                price.brandId(),
-                price.productId(),
-                price.startDate(),
-                price.endDate(),
-                price.price(),
-                price.currency()
-        );
     }
+
 }

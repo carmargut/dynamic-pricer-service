@@ -1,11 +1,11 @@
 package com.retail.dynamic_pricer_service.integration.infrastructure.apis.rest;
 
-import com.retail.dynamic_pricer_service.application.get_price.GetPriceRequest;
-import com.retail.dynamic_pricer_service.application.get_price.GetPriceResponse;
 import com.retail.dynamic_pricer_service.application.get_price.GetPriceUseCase;
 import com.retail.dynamic_pricer_service.domain.exceptions.DomainException;
 import com.retail.dynamic_pricer_service.domain.exceptions.EntityNotFoundException;
 import com.retail.dynamic_pricer_service.domain.exceptions.ValidationException;
+import com.retail.dynamic_pricer_service.domain.model.Price;
+import com.retail.dynamic_pricer_service.domain.model.PriceRequest;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +47,8 @@ class PriceControllerTest {
         String endDate = "2020-06-14T18:30:00";
         LocalDateTime startDateTime = LocalDateTime.parse(applicationDate, formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(endDate, formatter);
-        GetPriceResponse mockResponse = new GetPriceResponse(priceId, brandId, productId, startDateTime, endDateTime, price, "EUR");
-        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class))).thenReturn(mockResponse);
+        Price mockPrice = new Price(priceId, brandId, productId, startDateTime, endDateTime, 1, price, "EUR");
+        Mockito.when(getPriceUseCase.execute(any(PriceRequest.class))).thenReturn(mockPrice);
 
         mockMvc.perform(get("/api/prices")
                         .param("productId", productId.toString())
@@ -83,7 +83,7 @@ class PriceControllerTest {
         UUID productId = UUID.randomUUID();
         UUID brandId = UUID.randomUUID();
         String applicationDate = "2020-06-14T10:00:00";
-        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class))).thenThrow(new EntityNotFoundException("No applicable price found for the given parameters"));
+        Mockito.when(getPriceUseCase.execute(any(PriceRequest.class))).thenThrow(new EntityNotFoundException("No applicable price found for the given parameters"));
 
         mockMvc.perform(get("/api/prices")
                         .param("productId", productId.toString())
@@ -100,7 +100,7 @@ class PriceControllerTest {
         UUID brandId = UUID.randomUUID();
         String applicationDate = "2020-06-14T10:00:00";
 
-        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class)))
+        Mockito.when(getPriceUseCase.execute(any(PriceRequest.class)))
                 .thenThrow(new ValidationException("Validation error"));
 
         mockMvc.perform(get("/api/prices")
@@ -118,7 +118,7 @@ class PriceControllerTest {
         UUID brandId = UUID.randomUUID();
         String applicationDate = "2020-06-14T10:00:00";
 
-        Mockito.when(getPriceUseCase.execute(any(GetPriceRequest.class)))
+        Mockito.when(getPriceUseCase.execute(any(PriceRequest.class)))
                 .thenThrow(new DomainException("Unexpected error"));
 
         mockMvc.perform(get("/api/prices")
@@ -172,4 +172,5 @@ class PriceControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
+
 }

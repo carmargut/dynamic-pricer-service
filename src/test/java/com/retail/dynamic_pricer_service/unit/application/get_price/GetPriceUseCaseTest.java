@@ -1,9 +1,8 @@
 package com.retail.dynamic_pricer_service.unit.application.get_price;
 
-import com.retail.dynamic_pricer_service.application.get_price.GetPriceRequest;
-import com.retail.dynamic_pricer_service.application.get_price.GetPriceResponse;
 import com.retail.dynamic_pricer_service.application.get_price.GetPriceUseCase;
 import com.retail.dynamic_pricer_service.domain.model.Price;
+import com.retail.dynamic_pricer_service.domain.model.PriceRequest;
 import com.retail.dynamic_pricer_service.domain.services.PriceDomainService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,9 +42,9 @@ class GetPriceUseCaseTest {
         BigDecimal priceValue = new BigDecimal("35.50");
         Price mockPrice = new Price(priceId, brandId, productId, startDate, endDate, 1, priceValue, "EUR");
         when(priceDomainService.findHighestPriorityPrice(productId, brandId, startDate)).thenReturn(mockPrice);
-        GetPriceRequest request = new GetPriceRequest(productId, brandId, startDateString);
+        PriceRequest request = new PriceRequest(productId, brandId, startDate);
 
-        GetPriceResponse response = getPriceUseCase.execute(request);
+        Price response = getPriceUseCase.execute(request);
 
         assertEquals(priceId, response.priceId());
         assertEquals(brandId, response.brandId());
@@ -64,10 +63,11 @@ class GetPriceUseCaseTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime startDate = LocalDateTime.parse(startDateString, formatter);
         when(priceDomainService.findHighestPriorityPrice(productId, brandId, startDate)).thenThrow(new NoSuchElementException("Price not found"));
-        GetPriceRequest request = new GetPriceRequest(productId, brandId, startDateString);
+        PriceRequest request = new PriceRequest(productId, brandId, startDate);
 
         NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> getPriceUseCase.execute(request));
         assertEquals("Price not found", exception.getMessage());
         verify(priceDomainService, times(1)).findHighestPriorityPrice(productId, brandId, startDate);
     }
+
 }

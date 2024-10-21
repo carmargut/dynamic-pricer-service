@@ -1,4 +1,4 @@
-package com.retail.dynamic_pricer_service.application.get_price;
+package com.retail.dynamic_pricer_service.infrastructure.adapters.repositories.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,4 +13,5 @@ public record GetPriceResponse(
         BigDecimal price,
         String currency
 ) {
+
 }
