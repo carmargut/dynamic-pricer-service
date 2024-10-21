@@ -15,21 +15,22 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<RestErrorResponse> handleValidationException(ValidationException ex) {
-        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), ExceptionCodes.BAD_REQUEST.code), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.BAD_REQUEST.value())), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<RestErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
-        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), ExceptionCodes.NOT_FOUND.code), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.NOT_FOUND.value())), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<RestErrorResponse> handleDomainException(DomainException ex) {
-        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), ExceptionCodes.INTERNAL_SERVER_ERROR.code), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new RestErrorResponse(ex.getMessage(), String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<RestErrorResponse> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        return new ResponseEntity<>(new RestErrorResponse("Invalid UUID format", ExceptionCodes.BAD_REQUEST.code), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new RestErrorResponse("Invalid UUID format", String.valueOf(HttpStatus.BAD_REQUEST.value())), HttpStatus.BAD_REQUEST);
     }
+
 }
