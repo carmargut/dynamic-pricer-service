@@ -6,13 +6,11 @@ import com.retail.dynamic_pricer_service.infrastructure.adapters.repositories.mo
 import com.retail.dynamic_pricer_service.infrastructure.adapters.repositories.model.GetPriceResponse;
 import com.retail.dynamic_pricer_service.infrastructure.apis.rest.mappers.PriceMapper;
 import com.retail.dynamic_pricer_service.infrastructure.apis.rest.mappers.PriceRequestMapper;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/prices")
@@ -25,9 +23,8 @@ public class PriceController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getPrice(@RequestParam UUID productId, @RequestParam UUID brandId, @RequestParam String applicationDate) {
-        GetPriceRequest getPriceRequest = new GetPriceRequest(productId, brandId, applicationDate);
-        PriceRequest priceRequest = PriceRequestMapper.INSTANCE.toDomain(getPriceRequest);
+    public ResponseEntity<?> getPrice(@Valid GetPriceRequest request) {
+        PriceRequest priceRequest = PriceRequestMapper.INSTANCE.toDomain(request);
         var price = getPriceUseCase.execute(priceRequest);
         GetPriceResponse response = PriceMapper.INSTANCE.toApi(price);
         return ResponseEntity.ok(response);

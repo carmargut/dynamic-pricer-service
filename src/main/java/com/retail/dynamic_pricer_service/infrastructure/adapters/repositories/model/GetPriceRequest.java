@@ -1,6 +1,7 @@
 package com.retail.dynamic_pricer_service.infrastructure.adapters.repositories.model;
 
 import com.retail.dynamic_pricer_service.domain.exceptions.ValidationException;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,13 +10,16 @@ import java.util.UUID;
 public class GetPriceRequest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    @NotNull(message = "Product ID cannot be null")
     private final UUID productId;
+    @NotNull(message = "Brand ID cannot be null")
     private final UUID brandId;
+    @NotNull(message = "Application date cannot be null")
     private final LocalDateTime applicationDate;
 
     public GetPriceRequest(UUID productId, UUID brandId, String applicationDate) {
-        this.productId = requireNonNull(productId, "Product ID cannot be null");
-        this.brandId = requireNonNull(brandId, "Brand ID cannot be null");
+        this.productId = productId;
+        this.brandId = brandId;
         this.applicationDate = parseApplicationDate(applicationDate);
     }
 
@@ -26,13 +30,6 @@ public class GetPriceRequest {
         } catch (Exception e) {
             throw new ValidationException("Invalid date format");
         }
-    }
-
-    private <T> T requireNonNull(T obj, String message) {
-        if (obj == null) {
-            throw new ValidationException(message);
-        }
-        return obj;
     }
 
     public UUID getProductId() {
