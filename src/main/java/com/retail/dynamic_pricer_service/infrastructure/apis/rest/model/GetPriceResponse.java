@@ -1,4 +1,4 @@
-package com.retail.dynamic_pricer_service.infrastructure.adapters.repositories.model;
+package com.retail.dynamic_pricer_service.infrastructure.apis.rest.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
