@@ -2,8 +2,12 @@ package com.retail.dynamic_pricer_service.unit.infrastructure.apis.rest.mappers;
 
 import com.retail.dynamic_pricer_service.domain.model.Price;
 import com.retail.dynamic_pricer_service.infrastructure.apis.rest.mappers.PriceMapper;
+import com.retail.dynamic_pricer_service.infrastructure.apis.rest.mappers.PriceMapperImpl;
 import com.retail.dynamic_pricer_service.infrastructure.apis.rest.model.GetPriceResponse;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +15,11 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(MockitoExtension.class)
 class PriceMapperTest {
+
+    @InjectMocks
+    private PriceMapper priceMapper = new PriceMapperImpl();
 
     @Test
     void shouldMapPriceToGetPriceResponse() {
@@ -25,7 +33,7 @@ class PriceMapperTest {
 
         Price price = new Price(priceId, brandId, productId, startDate, endDate, 1, priceValue, currency);
 
-        GetPriceResponse response = PriceMapper.INSTANCE.toApi(price);
+        GetPriceResponse response = priceMapper.toApi(price);
 
         assertEquals(priceId, response.priceId());
         assertEquals(brandId, response.brandId());

@@ -17,16 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class PriceController {
 
     private final GetPriceUseCase getPriceUseCase;
+    private final PriceMapper priceMapper;
+    private final PriceRequestMapper priceRequestMapper;
 
-    public PriceController(GetPriceUseCase getPriceUseCase) {
+    public PriceController(GetPriceUseCase getPriceUseCase, PriceMapper priceMapper, PriceRequestMapper priceRequestMapper) {
         this.getPriceUseCase = getPriceUseCase;
+        this.priceMapper = priceMapper;
+        this.priceRequestMapper = priceRequestMapper;
     }
 
     @GetMapping
     public ResponseEntity<?> getPrice(@Valid GetPriceRequest request) {
-        PriceRequest priceRequest = PriceRequestMapper.INSTANCE.toDomain(request);
+        PriceRequest priceRequest = priceRequestMapper.toDomain(request);
         var price = getPriceUseCase.execute(priceRequest);
-        GetPriceResponse response = PriceMapper.INSTANCE.toApi(price);
+        GetPriceResponse response = priceMapper.toApi(price);
         return ResponseEntity.ok(response);
     }
 
