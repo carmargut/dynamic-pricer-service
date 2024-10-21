@@ -16,9 +16,9 @@ public class GetPriceUseCase {
 
     public Price execute(PriceRequest request) {
         return priceService.findHighestPriorityPrice(
-                request.getProductId(),
-                request.getBrandId(),
-                request.getApplicationDate()
+                request.productId(),
+                request.brandId(),
+                request.applicationDate()
         );
     }
 

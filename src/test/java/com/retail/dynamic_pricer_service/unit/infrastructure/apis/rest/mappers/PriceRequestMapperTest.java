@@ -30,9 +30,9 @@ class PriceRequestMapperTest {
 
         PriceRequest priceRequest = priceRequestMapper.toDomain(getPriceRequest);
 
-        assertEquals(productId, priceRequest.getProductId());
-        assertEquals(brandId, priceRequest.getBrandId());
-        assertEquals(LocalDateTime.parse(applicationDate), priceRequest.getApplicationDate());
+        assertEquals(productId, priceRequest.productId());
+        assertEquals(brandId, priceRequest.brandId());
+        assertEquals(LocalDateTime.parse(applicationDate), priceRequest.applicationDate());
     }
 
 }
